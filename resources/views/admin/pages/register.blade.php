@@ -99,66 +99,8 @@
                                         </div>
             
                                         <div class="mt-4">
-                                            <!-- <form class="needs-validation" novalidate id="register_form">
-                
-                                                <div class="mb-3">
-                                                    <label for="useremail" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="useremail" placeholder="Enter email" required>  
-                                                    <div class="invalid-feedback">
-                                                        Please Enter Email
-                                                    </div>        
-                                                </div>
-                        
-                                                <div class="mb-3">
-                                                    <label for="username" class="form-label">Username</label>
-                                                    <input type="text" class="form-control" id="username" placeholder="Enter username" required>
-                                                    <div class="invalid-feedback">
-                                                        Please Enter Username
-                                                    </div>  
-                                                </div>
-                        
-                                                <div class="mb-3">
-                                                    <label for="userpassword" class="form-label">Password</label>
-                                                    <input type="password" class="form-control" id="userpassword" placeholder="Enter password" required>
-                                                    <div class="invalid-feedback">
-                                                        Please Enter Password
-                                                    </div>       
-                                                </div>
-
-                                                <div>
-                                                    <p class="mb-0">By registering you agree to the Skote <a href="#" class="text-primary">Terms of Use</a></p>
-                                                </div>
-                                                
-                                                <div class="mt-4 d-grid">
-                                                    <button class="btn btn-primary waves-effect waves-light" id="register_button" type="submit">Register</button>
-                                                </div>
-                    
-                                                <div class="mt-4 text-center">
-                                                    <h5 class="font-size-14 mb-3">Sign up using</h5>
-                    
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item">
-                                                            <a href="javascript::void()" class="social-list-item bg-primary text-white border-primary">
-                                                                <i class="mdi mdi-facebook"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="javascript::void()" class="social-list-item bg-info text-white border-info">
-                                                                <i class="mdi mdi-twitter"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="javascript::void()" class="social-list-item bg-danger text-white border-danger">
-                                                                <i class="mdi mdi-google"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-
-                                                </div>
-
-                                            </form> -->
-
                                             <form class="needs-validation" novalidate id="register_form">
+                                                @csrf
                                                 <div class="mb-3">
                                                     <label for="useremail" class="form-label">Email</label>
                                                     <input type="email" class="form-control" id="useremail" name="email" placeholder="Enter email" required>
@@ -169,7 +111,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Username</label>
-                                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+                                                    <input type="text" class="form-control" id="username" name="name" placeholder="Enter username" required>
                                                     <div class="invalid-feedback">
                                                         Please enter a username.
                                                     </div>
@@ -188,7 +130,7 @@
                                                 </div>
 
                                                 <div class="mt-4 d-grid">
-                                                    <button class="btn btn-primary waves-effect waves-light" id="register_button" type="submit">Register</button>
+                                                    <button class="btn btn-primary waves-effect waves-light" id="register_button" type="button">Register</button>
                                                 </div>
 
                                                 <div class="mt-4 text-center">
@@ -216,7 +158,7 @@
 
 
                                             <div class="mt-5 text-center">
-                                                <p>Already have an account ? <a href="auth-login-2.html" class="fw-medium text-primary"> Login</a> </p>
+                                                <p>Already have an account ? <a href="{{ route('login') }}" class="fw-medium text-primary"> Login</a> </p>
                                             </div>
         
                                         </div>
@@ -255,32 +197,37 @@
         <script src="{{ asset('assets/js/pages/auth-2-carousel.init.js') }}"></script>
 
         <!-- App js -->
-        <!-- <script src="{{ asset('assets/js/app.js') }}"></script> -->
+        <script src="{{ asset('assets/js/app.js') }}"></script>
 
     </body>
 </html>
 
 <script type="text/javascript">
-    $(document).ready(function() 
+    $(document).ready(function()
     {
-        alert('adsfads');
-        $('#register_form').on('submit',function(e)
+        $('#register_button').on('click',function()
         {
-            alert('asdfadsf');
-            return false;
-            e.preventDefault();
-            alert('adsasdf');
+
+            $('#register_form').find('.error').remove();
+
             $.ajax({
-                url:{{ route('register_save') }},
+                url:"{{route('register_save')}}",
                 type:'POST',
-                data:$(this).serialize(),
+                data:$('#register_form').serialize(),
                 success:function(result)
                 {
-                    alert('success alert');
-                    console.log(result);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error); // Optional: handle errors
+                    $('#register_form').find('.error').remove();
+                    if(result.status == false)
+                    {
+                        let errors = result.errors;
+                        $.each(errors,function(field,message){
+                            $('#register_form').find('input[name="'+field+'"]').after('<span class="error">'+message+'</span>')
+                        });
+                    }
+                    else
+                    {
+                        window.location.href = result.redirect;
+                    }
                 }
             });
         });

@@ -99,11 +99,11 @@
                                     </div>
         
                                     <div class="mt-4">
-                                        <form action="https://themesbrand.com/skote-cakephp/layouts/index.html">
-            
+                                        <form id="login_form">
+                                            @csrf
                                             <div class="mb-3">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
                                             </div>
                     
                                             <div class="mb-3">
@@ -112,7 +112,7 @@
                                                 </div>
                                                 <label class="form-label">Password</label>
                                                 <div class="input-group auth-pass-inputgroup">
-                                                    <input type="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                                    <input type="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" name="password">
                                                     <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
                                                 </div>
                                             </div>
@@ -125,7 +125,7 @@
                                             </div>
                                             
                                             <div class="mt-3 d-grid">
-                                                <button class="btn btn-primary waves-effect waves-light" type="submit">Log In</button>
+                                                <button class="btn btn-primary waves-effect waves-light" type="button" id="login_button">Log In</button>
                                             </div>
                 
                                             
@@ -194,3 +194,8 @@
 
 <!-- Mirrored from themesbrand.com/skote-cakephp/layouts/auth-login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 06 May 2023 10:35:49 GMT -->
 </html>
+<script>
+    window.ajaxUrls = {
+        login: "{{route('login_match')}}"
+    };
+</script>
