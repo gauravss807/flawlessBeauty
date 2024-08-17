@@ -10,12 +10,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0 font-size-18">Users</h4>
+                            <h4 class="mb-sm-0 font-size-18">Vendors</h4>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                    <li class="breadcrumb-item active">Users</li>
+                                    <li class="breadcrumb-item active">Vendors</li>
                                 </ol>
                             </div>
 
@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="text-sm-end">
-                                            <a href="{{route('user.create')}}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add User</a>
+                                            <a href="{{route('vendor.create')}}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add Vendor</a>
                                         </div>
                                     </div><!-- end col-->
                                 </div>
@@ -54,16 +54,16 @@
                                                         <label class="form-check-label" for="checkAll"></label>
                                                     </div>
                                                 </th>
-                                                <th class="align-middle">User ID</th>
-                                                <th class="align-middle">User Name</th>
-                                                <th class="align-middle">Email</th>
+                                                <th class="align-middle">Vendor ID</th>
+                                                <th class="align-middle">Vendor Name</th>
+                                                <th class="align-middle">Vendor Email</th>
                                                 <th class="align-middle">Created At</th>
                                                 <th class="align-middle">Action</th>
                                             </tr>
                                         </thead>
                                         
                                         <tbody>
-                                            @foreach($users as $user)
+                                            @foreach($vendors as $vendor)
                                             <tr>
                                                 <td>
                                                     <div class="form-check font-size-16">
@@ -71,13 +71,13 @@
                                                         <label class="form-check-label" for="orderidcheck01"></label>
                                                     </div>
                                                 </td>
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $vendor->id }}</td>
+                                                <td>{{ $vendor->vendor_name }}</td>
+                                                <td>{{ $vendor->vendor_email }}</td>
                                                 <td>{{ $user->created_at->format('d-m-Y H:i A') }}</td>
                                                 <td>
                                                     <div class="d-flex gap-3">
-                                                        <a href="{{ route('user.edit',['id'=>$user->id]) }}" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
+                                                        <a href="{{ route('vendor.edit',['id'=>$vendor->id]) }}" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
                                                         <a href="javascript:void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18"></i></a>
                                                     </div>
                                                 </td>

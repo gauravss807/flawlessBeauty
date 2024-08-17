@@ -10,12 +10,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">User @if(isset($id) && !empty($id))Edit @else Create @endif</h4>
+                        <h4 class="mb-sm-0 font-size-18">Vendor @if(isset($id) && !empty($id))Edit @else Create @endif</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('user.listing') }}">Users</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('vendor.listing') }}">Vendors</a></li>
                                 <li class="breadcrumb-item active">@if(isset($id) && !empty($id))Edit @else Create @endif</li>
                             </ol>
                         </div>
@@ -29,35 +29,132 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form id="user_form">
+                            <form id="vendor_form">
                                 @csrf
-                                
-                                <div class="row mb-2">
-                                    <div class="form-group col-md-6">
-                                        <label for="name">Name</label>
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Enter user name" value="{{ $user->name??'' }}">
+                                <h5>Vendor Details</h5>
+                                <div class="mb-4 p-2">
+                                    <div class="row mb-2">
+                                        <div class="form-group col-md-3">
+                                            <label for="vendor_name">Vendor Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="vendor_name" id="vendor_name" class="form-control" placeholder="Enter vendor name" value="{{ $vendor->name??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="vendor_email">Vendor Email <span class="text-danger">*</span></label>
+                                            <input type="email" name="vendor_email" id="vendor_email" class="form-control" placeholder="Enter vendor email" value="{{ $vendor->email??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="vendor_gender">Vendor Gender</label>
+                                            <select id="vendor_gender" class="form-select" name="vendor_gender">
+                                                <option value="">Select an option</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label for="email">Email</label>
-                                        <input type="email" name="email" id="email" class="form-control" placeholder="Enter user email" value="{{ $user->email??'' }}">
+                                    <div class="row mb-2">
+                                        <div class="form-group col-md-3">
+                                            <label for="vendor_phone">Vendor Phone</label>
+                                            <input type="text" name="vendor_phone" id="vendor_phone" class="form-control" placeholder="Enter phone" value="{{ $vendor->vendor_phone??'' }}">
+                                        </div>
+                                        <div class="form-group col-md-9">
+                                            <label for="vendor_address">Vendor Address</label>
+                                            <input type="text" name="vendor_address" id="vendor_address" class="form-control" placeholder="Enter address">
+                                        </div>
                                     </div>
 
+                                    <div class="row mb-2">
+                                        <div class="form-group col-md-3">
+                                            <label for="vendor_role">Vendor Role <span class="text-danger">*</span></label>
+                                            <select id="vendor_role" class="form-select" name="vendor_role">
+                                                <option value="">Select an option</option>
+                                                <option value="owner">Owner</option>
+                                                <option value="manager">Manager</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="row mb-2">
-                                    <div class="form-group col-md-6">
-                                        <label for="password">Password</label>
-                                        <input type="password" name="password" id="password" class="form-control" placeholder="Enter user password">
+                                <h5>Salon Details</h5>
+                                <div class="mb-4 p-2">
+                                    <div class="row mb-2">
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_name">Salon Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="salon_name" id="salon_name" class="form-control" placeholder="Enter salon name" value="{{ $vendor->salon_name??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="salon_email">Salon Email</label>
+                                            <input type="email" name="salon_email" id="salon_email" class="form-control" placeholder="Enter salon email" value="{{ $vendor->salon_email??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_phone">Salon Phone <span class="text-danger">*</span></label>
+                                            <input type="text" name="salon_phone" id="salon_phone" class="form-control" placeholder="Enter phone" value="{{ $vendor->salon_phone??'' }}">
+                                        </div>
+
                                     </div>
-                                    <!-- <div class="form-group col-md-6">
-                                        <label for="password_confirmation">Confirm Password</label>
-                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirm user password">
-                                    </div> -->
+
+                                    <div class="row mb-2">
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_website">Salon Website</label>
+                                            <input type="text" name="salon_website" id="salon_website" class="form-control" placeholder="Enter salon website" value="{{ $vendor->salon_website??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-9">
+                                            <label for="salon_address">Salon Address <span class="text-danger">*</span></label>
+                                            <input type="text" name="salon_address" id="salon_address" class="form-control" placeholder="Enter salon address">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mb-2">
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_city">Salon City <span class="text-danger">*</span></label>
+                                            <input type="text" name="salon_city" id="salon_city" class="form-control" placeholder="Enter salon name" value="{{ $vendor->salon_city??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_state">Salon State <span class="text-danger">*</span></label>
+                                            <input type="text" name="salon_state" id="salon_state" class="form-control" placeholder="Enter salon state" value="{{ $vendor->salon_state??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_country">Salon Country <span class="text-danger">*</span></label>
+                                            <input type="text" name="salon_country" id="salon_country" class="form-control" placeholder="Enter salon country" value="{{ $vendor->salon_country??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_postal_code">Salon Postal Code</label>
+                                            <input type="text" name="salon_postal_code" id="salon_postal_code" class="form-control" placeholder="Enter salon postal code" value="{{ $vendor->salon_postal_code??'' }}">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mb-2">
+                                        <div class="form-group col-md-3">
+                                            <label for="salon_establish_date">Salon Establish Date</label>
+                                            <input type="text" name="established_date" id="salon_establish_date" class="form-control" placeholder="Enter salon established date" value="{{ $vendor->established_date??'' }}">
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="status">Status <span class="text-danger">*</span></label>
+                                            <select class="form-select" name="status">
+                                                <option value="">Select an option</option>
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="hidden" value="{{ $user->id??'' }}" name="id">
+                                    <input type="hidden" value="{{ $vendor->id??'' }}" name="id">
                                     <button type="button" class="btn btn-primary" id="submit_btn">Submit</button>
                                 </div>
                             </form>
@@ -85,4 +182,34 @@
         </div>
     </footer>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() 
+    {
+        $('#submit_btn').on('click',function()
+        {
+            $('#vendor_form').find('.error').remove();
+
+            $.ajax({
+                url:"{{ route('vendor.store') }}",
+                type: 'POST',
+                data: $('#vendor_form').serialize(),
+                success: function(result)
+                {
+                    if(result.status == false)
+                    {
+
+                        let $errors = result.errors;
+
+                        $.each($errors,function(field,message)
+                        {
+                            $('#vendor_form').find('input[name="'+field+'"]').after('<span class="error">'+message+'</span>');
+                            $('#vendor_form').find('select[name="'+field+'"]').after('<span class="error">'+message+'</span>');
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection

@@ -66,26 +66,4 @@ class UserController extends Controller
 
         return redirect()->route('login');
     }
-
-    public function index()
-    {
-        $title = 'Users - Flawless Beauty';
-
-        $users = User::get();
-
-        return view('admin.users.listing',compact('title','users'));
-    }
-
-    public function create()
-    {
-        $title = "Add User - Flawless Beauty";
-        return view('admin.users.addEditUser',compact('title'));
-    }
-
-    public function edit($id)
-    {
-        $title = 'Edit User - Flawless Beauty';
-        $user = User::find($id);
-        return view('admin.users.addEditUser',compact('title','user'));
-    }
 }
