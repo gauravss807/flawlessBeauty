@@ -26,9 +26,9 @@
             </li>
 
             <li>
-                <a href="{{ route('user.listing') }}" class="waves-effect">
+                <a href="{{ route('vendor.listing') }}" class="waves-effect">
                     <i class="bx bx-home-circle"></i>
-                    <span key="t-users">Users</span>   
+                    <span key="t-users">Vendors</span>   
                 </a>
             </li>
 
