@@ -21,6 +21,13 @@
                     <span key="t-users">Vendors</span>   
                 </a>
             </li>
+
+            <li>
+                <a href="{{ route('service.listing') }}" class="waves-effect">
+                    <i class='bx bx-user'></i>
+                    <span key="t-users">Services</span>   
+                </a>
+            </li>
         </ul>
     </div>
     <!-- Sidebar -->

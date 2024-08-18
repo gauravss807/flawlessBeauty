@@ -14,14 +14,15 @@ class VendorController extends Controller
      */
     public function index()
     {
+        $per_page = 2;
         $title = 'Vendors - Flawless Beauty';
 
-        $vendors = Vendor::get();
+        $vendors = Vendor::paginate($per_page);
 
-        return view('admin.vendors.listing',compact('title','vendors'));
+        return view('admin.vendors.listing',compact('title','vendors','per_page'));
     }
 
-    /**
+    /*
      * Show the form for creating a new resource.
      */
     public function create()
@@ -35,12 +36,14 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
+        
         $rules = [
-            'vendor_name' => 'required',
-            'vendor_email' => 'required|email|unique:vendors,email',
+            'vendor_name' => 'required|regex:/^[A-Za-z\s]+$/',
+            'vendor_email' => 'required|email|unique:vendors,vendor_email,'.$request->id,
+            'vendor_phone' => 'numeric|digits:10',
             'vendor_role' => 'required',
-            'salon_name' => 'required',
-            'salon_phone' => 'required|min:10|max:10',
+            'salon_name' => 'required|regex:/^[A-Za-z\s]+$/',
+            'salon_phone' => 'required|numeric|digits:10',
             'salon_address' => 'required',
             'salon_city' => 'required',
             'salon_state' => 'required',
@@ -55,7 +58,16 @@ class VendorController extends Controller
             return response()->json(['status' => false,'errors'=>$validate->messages()]);
         }
 
-        dd('gadsfadsfklvlahfljn');
+        if(!empty($request->id))
+        {
+            Vendor::find($request->id)->update($request->all());
+            return response()->json(['status'=>true,'redirect'=>route('vendor.listing'),'message'=>'Vendor Updated Successfully']);
+        }
+        {
+            Vendor::create($request->all());
+            return response()->json(['status'=>true,'redirect'=>route('vendor.listing'),'message'=>'Vendor Created Successfully']);
+        }
+        
     }
 
     /**
@@ -76,19 +88,13 @@ class VendorController extends Controller
         return view('admin.vendors.addEditVendor',compact('title','vendor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Vendor $vendor)
+    public function destroy(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Vendor $vendor)
-    {
-        //
+        $vendor_detail = Vendor::find($request->id);
+        if(!empty($vendor_detail))
+        {
+            $vendor_detail->delete();
+            return response(['status'=>true,'message'=>'Vendor Deleted Successfully']);
+        }
     }
 }
