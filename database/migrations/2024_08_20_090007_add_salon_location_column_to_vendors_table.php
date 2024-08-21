@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('category_name');
-            $table->text('category_description')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('vendors', function (Blueprint $table) {
+            $table->string('salon_location')->nullable();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_categories');
+        Schema::table('vendors', function (Blueprint $table) {
+            $table->dropColumn('salon_location');
+        });
     }
 };

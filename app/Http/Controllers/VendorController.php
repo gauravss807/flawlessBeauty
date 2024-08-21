@@ -48,6 +48,7 @@ class VendorController extends Controller
             'salon_city' => 'required',
             'salon_state' => 'required',
             'salon_country' => 'required',
+            'salon_location' => 'required',
             'status' => 'required'
         ];
 
@@ -68,14 +69,6 @@ class VendorController extends Controller
             return response()->json(['status'=>true,'redirect'=>route('vendor.listing'),'message'=>'Vendor Created Successfully']);
         }
         
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Vendor $vendor)
-    {
-        //
     }
 
     /**

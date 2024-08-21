@@ -1,0 +1,13 @@
+1. services ki categories add karne ki need nahi hai
+
+2. vendor ke saloon ki photos add karni hai apn ko multiple and current google map location lagani hai
+
+3. vendors ki team bhi batani hai jiss me vendor kudh ki team select create karr sake
+
+4. category field also in the services create and edit time
+
+5. appointment 
+
+6. hot deal button add karna hai services listing me then ek listing hogi upar then uss ke neeche form banana hai
+
+7. service description change to service processor

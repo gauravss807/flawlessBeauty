@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="text-sm-end">
-                                            <a href="{{route('vendor.create')}}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add Service</a>
+                                            <a href="{{route('service.create')}}" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add Service</a>
                                         </div>
                                     </div><!-- end col-->
                                 </div>
@@ -48,16 +48,17 @@
                                     <table class="table align-middle table-nowrap table-check">
                                         <thead class="table-light">
                                             <tr>
-                                                <th style="width: 20px;" class="align-middle">
+                                                <!-- <th style="width: 20px;" class="align-middle">
                                                     <div class="form-check font-size-16">
                                                         <input class="form-check-input" type="checkbox" id="checkAll">
                                                         <label class="form-check-label" for="checkAll"></label>
                                                     </div>
-                                                </th>
+                                                </th> -->
                                                 <th class="align-middle">Service ID</th>
                                                 <th class="align-middle">Service Name</th>
                                                 <th class="align-middle">Service Description</th>
                                                 <th class="align-middle">Service Time</th>
+                                                <th class="align-middle">Service Price</th>
                                                 <th class="align-middle">Created At</th>
                                                 <th class="align-middle">Status</th>
                                                 <th class="align-middle">Action</th>
@@ -67,21 +68,23 @@
                                         <tbody>
                                             @foreach($services as $service)
                                             <tr>
-                                                <td>
+                                                <!-- <td>
                                                     <div class="form-check font-size-16">
                                                         <input class="form-check-input" type="checkbox" id="orderidcheck01">
                                                         <label class="form-check-label" for="orderidcheck01"></label>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                                 <td>{{ $service->id }}</td>
-                                                <td>{{ $service->vendor_name }}</td>
-                                                <td>{{ $service->salon_name }}</td>
+                                                <td>{{ $service->service_name }}</td>
+                                                <td style="word-wrap:break-word; white-space:normal;">{{ $service->service_description }}</td>
+                                                <td>{{ $service->service_duration }}</td>
+                                                <td>{{ $service->service_price }}</td>
                                                 <td>{{ $service->created_at->format('d-m-Y H:i A') }}</td>
                                                 <td>{{ ucwords($service->status) }}</td>
                                                 <td>
                                                     <div class="d-flex gap-3">
                                                         <a href="{{ route('service.edit',['id'=>$service->id]) }}" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                                        <a href="javascript::void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18" id="delete_service" data_id="{{ $service->id }}"></i></a>
+                                                        <a href="javascript::void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18 delete_service" data_id="{{ $service->id }}"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -157,7 +160,7 @@
     <script type="text/javascript">
         $(document).ready(function()
         {
-            $('#delete_service').on('click',function()
+            $('.delete_service').on('click',function()
             {
                 Swal.fire({
                     title: 'Are you sure?',
@@ -188,6 +191,14 @@
                                         window.location.reload();
                                     });
                                 }
+                                else
+                                {
+                                    Swal.fire(
+                                        response.message,
+                                        'error'
+                                    );
+                                }
+                                
                             },
                             error: function(xhr) {
                                 // Handle error

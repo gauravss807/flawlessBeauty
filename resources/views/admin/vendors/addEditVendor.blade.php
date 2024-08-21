@@ -141,6 +141,11 @@
                                             <input type="text" name="established_date" id="salon_establish_date" class="form-control" placeholder="Enter salon established date" value="{{ $vendor->established_date??'' }}">
                                         </div>
 
+                                        <div class="form-group col-md-6">
+                                            <label for="salon_location">Salon Location <span class="text-danger">*</span></label>
+                                            <input type="text" name="salon_location" id="salon_location" class="form-control" placeholder="Enter salon google map location" value="{{ $vendor->salon_location??'' }}">
+                                        </div>
+
                                         <div class="form-group col-md-3">
                                             <label for="status">Status <span class="text-danger">*</span></label>
                                             <select class="form-select" name="status">
@@ -152,6 +157,41 @@
 
                                     </div>
                                 </div>
+
+                                <!-- <div class="row mb-2">
+                                    <div class="form-group col-md-3">
+                                        <div class="mediaBox Multiple">
+                                        <a href="javascript:void(0);" class="btn btn-primary Multiple WsUploadMedia"
+                                            data-parent_id="{{ $data->id ?? '' }}" data-category="Product">
+                                        Gallery Image </a>
+                                        <input type="hidden" class="media_id" name="gallery_images_ids"
+                                            value="{{ isset($data) ? $data->gallery_images_ids : old('gallery_images_ids') }}" />
+                                        <div class="imgPrev">
+                                            <ul class="MediaGall">
+                                                @if (isset($data) && !empty($data->gallery_images_ids))
+                                                @php
+                                                $ids = explode(',', $data->gallery_images_ids);
+                                                @endphp
+                                                @if ($ids)
+                                                @foreach ($ids as $id)
+                                                @php
+                                                $MediaUrl = getMediaUrl($id);
+                                                @endphp
+                                                @if (!empty($MediaUrl))
+                                                <li data-id="{{ $id ?? '' }}"> <span
+                                                    class="delMediaImg"
+                                                    data-img-id="{{ $id ?? '' }}">X</span>
+                                                    <img src="{{ $MediaUrl }}"
+                                                    class="mediaImg img-fluid">
+                                                </li>
+                                                @endif
+                                                @endforeach
+                                                @endif
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <input type="hidden" value="{{ $vendor->id??'' }}" name="id">

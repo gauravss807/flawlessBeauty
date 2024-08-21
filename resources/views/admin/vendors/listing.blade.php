@@ -48,12 +48,12 @@
                                     <table class="table align-middle table-nowrap table-check">
                                         <thead class="table-light">
                                             <tr>
-                                                <th style="width: 20px;" class="align-middle">
+                                                <!-- <th style="width: 20px;" class="align-middle">
                                                     <div class="form-check font-size-16">
                                                         <input class="form-check-input" type="checkbox" id="checkAll">
                                                         <label class="form-check-label" for="checkAll"></label>
                                                     </div>
-                                                </th>
+                                                </th> -->
                                                 <th class="align-middle">Vendor ID</th>
                                                 <th class="align-middle">Vendor Name</th>
                                                 <th class="align-middle">Saloon Name</th>
@@ -68,12 +68,12 @@
                                         <tbody>
                                             @foreach($vendors as $vendor)
                                             <tr>
-                                                <td>
+                                                <!-- <td>
                                                     <div class="form-check font-size-16">
                                                         <input class="form-check-input" type="checkbox" id="orderidcheck01">
                                                         <label class="form-check-label" for="orderidcheck01"></label>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                                 <td>{{ $vendor->id }}</td>
                                                 <td>{{ $vendor->vendor_name }}</td>
                                                 <td>{{ $vendor->salon_name }}</td>
@@ -85,7 +85,7 @@
                                                 <td>
                                                     <div class="d-flex gap-3">
                                                         <a href="{{ route('vendor.edit',['id'=>$vendor->id]) }}" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
-                                                        <a href="javascript::void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18" id="delete_vendor" data_id="{{ $vendor->id }}"></i></a>
+                                                        <a href="javascript::void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18 delete_vendor" data_id="{{ $vendor->id }}"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -161,7 +161,7 @@
     <script type="text/javascript">
         $(document).ready(function()
         {
-            $('#delete_vendor').on('click',function()
+            $('.delete_vendor').on('click',function()
             {
                 Swal.fire({
                     title: 'Are you sure?',
