@@ -39,4 +39,6 @@ Route::prefix('/admin')->middleware(ValidUser::class)->group(function(){
     Route::get('/service/edit/{id}',[ServicesController::class,'edit'])->name('service.edit');
     Route::post('/service/store',[ServicesController::class,'store'])->name('service.store');
     Route::delete('/service/delete',[ServicesController::class,'destroy'])->name('service.delete');
+    
+    Route::get('/service/{id}/hot_deal',[ServicesController::class,'hotDealListing'])->name('service.hot_deal.listing');
 });

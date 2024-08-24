@@ -19,5 +19,6 @@ class Services extends Model
         'service_duration',
         'service_price',
         'status',
+        'category',
     ];
 }

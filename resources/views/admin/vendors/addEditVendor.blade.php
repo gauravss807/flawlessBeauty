@@ -29,23 +29,23 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form id="vendor_form">
+                            <form id="vendor_form" enctype="multipart/form-data">
                                 @csrf
                                 <h5>Vendor Details</h5>
                                 <div class="mb-4 p-2">
                                     <div class="row mb-2">
                                         <div class="form-group col-md-3">
-                                            <label for="vendor_name">Vendor Name <span class="text-danger">*</span></label>
+                                            <label for="vendor_name">Name <span class="text-danger">*</span></label>
                                             <input type="text" name="vendor_name" id="vendor_name" class="form-control" placeholder="Enter vendor name" value="{{ $vendor->vendor_name??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="vendor_email">Vendor Email <span class="text-danger">*</span></label>
+                                            <label for="vendor_email">Email <span class="text-danger">*</span></label>
                                             <input type="email" name="vendor_email" id="vendor_email" class="form-control" placeholder="Enter vendor email" value="{{ $vendor->vendor_email??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-3">
-                                            <label for="vendor_gender">Vendor Gender</label>
+                                            <label for="vendor_gender">Gender</label>
                                             <select id="vendor_gender" class="form-select" name="vendor_gender">
                                                 <option value="">Select an option</option>
                                                 <option value="male" @if(isset($vendor) && $vendor->vendor_gender == 'male') selected @endif>Male</option>
@@ -58,23 +58,41 @@
 
                                     <div class="row mb-2">
                                         <div class="form-group col-md-3">
-                                            <label for="vendor_phone">Vendor Phone</label>
+                                            <label for="vendor_phone">Phone</label>
                                             <input type="text" name="vendor_phone" id="vendor_phone" class="form-control" placeholder="Enter phone" value="{{ $vendor->vendor_phone??'' }}">
                                         </div>
                                         <div class="form-group col-md-9">
-                                            <label for="vendor_address">Vendor Address</label>
+                                            <label for="vendor_address">Address</label>
                                             <input type="text" name="vendor_address" id="vendor_address" class="form-control" placeholder="Enter address" value="{{ $vendor->vendor_address??'' }}">
                                         </div>
                                     </div>
 
                                     <div class="row mb-2">
                                         <div class="form-group col-md-3">
-                                            <label for="vendor_role">Vendor Role <span class="text-danger">*</span></label>
+                                            <label for="vendor_role">Role <span class="text-danger">*</span></label>
                                             <select id="vendor_role" class="form-select" name="vendor_role">
                                                 <option value="">Select an option</option>
                                                 <option value="owner" @if(isset($vendor) && $vendor->vendor_role == 'owner') selected @endif>Owner</option>
                                                 <option value="manager" @if(isset($vendor) && $vendor->vendor_role == 'manager') selected @endif>Manager</option>
                                             </select>
+                                        </div>
+
+                                        <div class="form-group col-md-3">
+                                            <label for="vendor_profile_image">Profile Photo</label>
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="file" name="vendor_profile" class="form-control btn btn-primary" id="vendor_profile_image">
+                                                <input type="hidden" name="vendor_profile_id" id="vendor_profile_id" value="{{$vendor->vendor_profile_id??''}}" >
+                                                <div class="imgPrev col-md-3" style="margin-left: 20px;">
+                                                    @php
+                                                        $vendor_profile = App\Models\Media::find($vendor->vendor_profile_id);
+                                                    @endphp
+                                                    @if(!empty($vendor_profile->file_name_incl_extn))
+                                                        <span class="delVendorProfile text-danger" data-img-id="{{ $vendor_profile->id ?? '' }}" style="position:absolute;">X</span>
+                                                        <img src="{{ asset('/uploads/'.$vendor_profile->file_name_incl_extn) }}" class="mediaImg img-fluid vendor_profile_src">
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -83,17 +101,17 @@
                                 <div class="mb-4 p-2">
                                     <div class="row mb-2">
                                         <div class="form-group col-md-3">
-                                            <label for="salon_name">Salon Name <span class="text-danger">*</span></label>
+                                            <label for="salon_name">Name <span class="text-danger">*</span></label>
                                             <input type="text" name="salon_name" id="salon_name" class="form-control" placeholder="Enter salon name" value="{{ $vendor->salon_name??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="salon_email">Salon Email</label>
+                                            <label for="salon_email">Email</label>
                                             <input type="email" name="salon_email" id="salon_email" class="form-control" placeholder="Enter salon email" value="{{ $vendor->salon_email??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-3">
-                                            <label for="salon_phone">Salon Phone <span class="text-danger">*</span></label>
+                                            <label for="salon_phone">Phone <span class="text-danger">*</span></label>
                                             <input type="text" name="salon_phone" id="salon_phone" class="form-control" placeholder="Enter phone" value="{{ $vendor->salon_phone??'' }}">
                                         </div>
 
@@ -101,12 +119,12 @@
 
                                     <div class="row mb-2">
                                         <div class="form-group col-md-3">
-                                            <label for="salon_website">Salon Website</label>
+                                            <label for="salon_website">Website</label>
                                             <input type="text" name="salon_website" id="salon_website" class="form-control" placeholder="Enter salon website" value="{{ $vendor->salon_website??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-9">
-                                            <label for="salon_address">Salon Address <span class="text-danger">*</span></label>
+                                            <label for="salon_address">Address <span class="text-danger">*</span></label>
                                             <input type="text" name="salon_address" id="salon_address" class="form-control" placeholder="Enter salon address" value="{{ $vendor->salon_address??'' }}">
                                         </div>
 
@@ -114,22 +132,22 @@
 
                                     <div class="row mb-2">
                                         <div class="form-group col-md-3">
-                                            <label for="salon_city">Salon City <span class="text-danger">*</span></label>
+                                            <label for="salon_city">City <span class="text-danger">*</span></label>
                                             <input type="text" name="salon_city" id="salon_city" class="form-control" placeholder="Enter salon name" value="{{ $vendor->salon_city??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-3">
-                                            <label for="salon_state">Salon State <span class="text-danger">*</span></label>
+                                            <label for="salon_state">State <span class="text-danger">*</span></label>
                                             <input type="text" name="salon_state" id="salon_state" class="form-control" placeholder="Enter salon state" value="{{ $vendor->salon_state??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-3">
-                                            <label for="salon_country">Salon Country <span class="text-danger">*</span></label>
+                                            <label for="salon_country">Country <span class="text-danger">*</span></label>
                                             <input type="text" name="salon_country" id="salon_country" class="form-control" placeholder="Enter salon country" value="{{ $vendor->salon_country??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-3">
-                                            <label for="salon_postal_code">Salon Postal Code</label>
+                                            <label for="salon_postal_code">Postal Code</label>
                                             <input type="text" name="salon_postal_code" id="salon_postal_code" class="form-control" placeholder="Enter salon postal code" value="{{ $vendor->salon_postal_code??'' }}">
                                         </div>
 
@@ -137,12 +155,12 @@
 
                                     <div class="row mb-2">
                                         <div class="form-group col-md-3">
-                                            <label for="salon_establish_date">Salon Establish Date</label>
+                                            <label for="salon_establish_date">Establish Date</label>
                                             <input type="text" name="established_date" id="salon_establish_date" class="form-control" placeholder="Enter salon established date" value="{{ $vendor->established_date??'' }}">
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="salon_location">Salon Location <span class="text-danger">*</span></label>
+                                            <label for="salon_location">Location <span class="text-danger">*</span></label>
                                             <input type="text" name="salon_location" id="salon_location" class="form-control" placeholder="Enter salon google map location" value="{{ $vendor->salon_location??'' }}">
                                         </div>
 
@@ -155,6 +173,25 @@
                                             </select>
                                         </div>
 
+                                    </div>
+                                
+
+                                    <div class="form-group col-md-3">
+                                        <label for="salon_logo">Salon Logo</label>
+                                        <div style="display: flex; align-items: center;">
+                                            <input type="file" name="salon_logo" class="form-control btn btn-primary" id="salon_logo">
+                                            <input type="hidden" name="salon_logo_id" id="salon_logo_id" value="{{$vendor->salon_logo_id??''}}" >
+                                            <div class="salonLogPrev col-md-3" style="margin-left: 20px;">
+                                                @php
+                                                    $salon_logo = App\Models\Media::find($vendor->salon_logo_id);
+                                                @endphp
+                                                @if(!empty($salon_logo->file_name_incl_extn))
+                                                    <span class="delSalonLogo text-danger" data-img-id="{{ $salon_logo->id ?? '' }}" style="position:absolute;">X</span>
+                                                    <img src="{{ asset('/uploads/'.$salon_logo->file_name_incl_extn) }}" class="mediaImg img-fluid salon_logo_src">
+                                                @endif
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
 
@@ -235,10 +272,14 @@
         {
             $('#vendor_form').find('.error').remove();
 
+            var formData = new FormData($('#vendor_form')[0]);
+
             $.ajax({
                 url:"{{ route('vendor.store') }}",
                 type: 'POST',
-                data: $('#vendor_form').serialize(),
+                data: formData,
+                contentType:false,
+                processData:false,
                 success: function(result)
                 {
                     if(result.status == false)
@@ -258,6 +299,68 @@
                     }
                 }
             });
+        });
+
+        //this code for the vendor_profile 
+        document.getElementById('vendor_profile_image').addEventListener('change', function(event) {
+            const [file] = event.target.files;
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imagePreview = document.querySelector('.imgPrev img'); // Select the img inside the div with class imgPrev
+
+                    if (imagePreview) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block'; // Show the image preview
+                    } else {
+                        // If no img element exists, create one
+                        const newImage = document.createElement('img');
+                        newImage.src = e.target.result;
+                        newImage.classList.add('mediaImg', 'img-fluid');
+                        document.querySelector('.imgPrev').appendChild(newImage);
+                    }
+                };
+
+                reader.readAsDataURL(file); // Convert the file to a data URL
+            }
+        });
+
+        $('.delVendorProfile').on('click',function(){
+            $('#vendor_profile_id').val('');
+            $('.vendor_profile_src').attr('src','');
+        });
+
+        //this code for the Salon Logo
+        document.getElementById('salon_logo').addEventListener('change', function(event) {
+            const [file] = event.target.files;
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imagePreview = document.querySelector('.salonLogPrev img'); // Select the img inside the div with class imgPrev
+
+                    if (imagePreview) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block'; // Show the image preview
+                    } else {
+                        // If no img element exists, create one
+                        const newImage = document.createElement('img');
+                        newImage.src = e.target.result;
+                        newImage.classList.add('mediaImg', 'img-fluid');
+                        document.querySelector('.salonLogPrev').appendChild(newImage);
+                    }
+                };
+
+                reader.readAsDataURL(file); // Convert the file to a data URL
+            }
+        });
+
+        $('.delSalonLogo').on('click',function(){
+            $('#salon_logo_id').val('');
+            $('.salon_logo_src').attr('src','');
         });
     });
 </script>

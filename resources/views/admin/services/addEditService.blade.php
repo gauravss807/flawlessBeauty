@@ -34,6 +34,19 @@
                                 <div class="mb-4 p-2">
                                     <div class="row mb-2">
                                         <div class="form-group col-md-4">
+                                            <label for="category">Service Category <span class="text-danger">*</span></label>
+                                            <select class="form-select" name="category" id="category">
+                                                <option value="">Select an option</option>
+                                                <option value="makeup" @if(!empty($service) && $service->status == 'active') selected @endif>Make Up</option>
+                                                <option value="inactive" @if(!empty($service) && $service->status == 'inactive') selected @endif>Facials</option>
+                                                <option value="inactive" @if(!empty($service) && $service->status == 'inactive') selected @endif>Head Massage</option>
+                                                <option value="inactive" @if(!empty($service) && $service->status == 'inactive') selected @endif>Hair Colouring</option>
+                                            </select>
+
+                                            <!-- <input type="text" name="service_category" id="service_category" class="form-control" placeholder="Enter service name" value="{{ $service->service_name??'' }}"> -->
+                                        </div>
+
+                                        <div class="form-group col-md-4">
                                             <label for="service_name">Service Name <span class="text-danger">*</span></label>
                                             <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Enter service name" value="{{ $service->service_name??'' }}">
                                         </div>
@@ -42,19 +55,21 @@
                                             <label for="service_price">Service Price <span class="text-danger">*</span></label>
                                             <input type="text" name="service_price" id="service_price" class="form-control" placeholder="Enter service price" value="{{ $service->service_price??'' }}">
                                         </div>
-                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="service_duration">Service Duration <span class="text-danger">*</span></label>
-                                            <input type="number" id="service_duration" name="service_duration" min="0" step="1" class="form-control" value="{{ $service->service_duration??'' }}">
-                                        </div>
 
                                     </div>
 
                                     <div class="row mb-2">
                                         
-                                        <div class="form-group col-md-12">
-                                            <label for="service_description">Service Description <span class="text-danger">*</span></label>
-                                            <textarea name="service_description" id='service_description' class="form-control" rows="5">{{ $service->service_description??'' }}</textarea>
+                                        <div class="form-group">
+                                            <label for="service_description">Service Processor <span class="text-danger">*</span></label>
+                                            @php
+                                                $counter = 1;
+                                            @endphp
+                                            @if(!empty($services))
+
+                                            @else
+                                                @include('admin.services.serviceProcessorFields',['counter'=>$counter])
+                                            @endif
                                         </div>
                                         
                                     </div>
@@ -69,6 +84,11 @@
                                                 <option value="inactive" @if(!empty($service) && $service->status == 'inactive') selected @endif>Inactive</option>
                                             </select>
                                         </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label for="service_duration">Service Duration <span class="text-danger">*</span></label>
+                                            <input type="number" id="service_duration" name="service_duration" min="0" step="1" class="form-control" value="{{ $service->service_duration??'' }}">
+                                        </div>
                                         
                                     </div>
 
@@ -79,6 +99,17 @@
                                     <button type="button" class="btn btn-primary" id="submit_btn">Submit</button>
                                 </div>
                             </form>
+                            @php
+                                $counter = 1;
+                            @endphp
+                            <div class="d-none">
+                                <div id="processor_fields_clone">
+                                    @include('admin.services.serviceProcessorFields',['counter'=>$counter])
+                                </div>
+                            </div>
+                            @php
+                                $counter++;
+                            @endphp
                         </div>
                     </div>
                 </div>
@@ -135,6 +166,14 @@
                     }
                 }
             });
+        });
+
+        $('#add_btn').on('click',function()
+        {
+            var clone_div = $('#processor_fields_clone').clone();
+            console.log(clone_div);
+            // $(clone_dive).removeClass('d-none');
+            $(this).after(clone_div).removeClass('d-none');
         });
     });
 </script>

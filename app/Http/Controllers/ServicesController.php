@@ -35,6 +35,7 @@ class ServicesController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'category' => 'required',
             'service_name' => 'required',
             'service_description' => 'required',
             'service_duration' => 'required',
@@ -85,5 +86,12 @@ class ServicesController extends Controller
         Services::find($request->id)->delete();
 
         return response()->json(['status'=>true,'message'=>'Service Deleted Successfully.']);
+    }
+
+    public function hotDealListing($id)
+    {
+        $services = Services::find($id);
+        $title = 'Hot Deals - '. $services->service_name . '- Flawless Beauty';
+        return view('admin.services.hotDeals.listing',compact('title','services'));
     }
 }

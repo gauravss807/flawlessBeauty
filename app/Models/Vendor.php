@@ -30,7 +30,10 @@ class Vendor extends Model
         'salon_country',
         'salon_postal_code',
         'established_date',
-        'salon_location',
         'status',
+        'salon_location',
+        'vendor_profile_id',
+        'salon_logo_id',
+        'salon_gallery_ids',
     ];
 }

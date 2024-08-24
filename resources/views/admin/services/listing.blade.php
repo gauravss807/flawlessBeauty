@@ -56,7 +56,7 @@
                                                 </th> -->
                                                 <th class="align-middle">Service ID</th>
                                                 <th class="align-middle">Service Name</th>
-                                                <th class="align-middle">Service Description</th>
+                                                <th class="align-middle">Service Processor</th>
                                                 <th class="align-middle">Service Time</th>
                                                 <th class="align-middle">Service Price</th>
                                                 <th class="align-middle">Created At</th>
@@ -85,6 +85,7 @@
                                                     <div class="d-flex gap-3">
                                                         <a href="{{ route('service.edit',['id'=>$service->id]) }}" class="text-success"><i class="mdi mdi-pencil font-size-18"></i></a>
                                                         <a href="javascript::void(0);" class="text-danger"><i class="mdi mdi-delete font-size-18 delete_service" data_id="{{ $service->id }}"></i></a>
+                                                        <a href="{{ route('service.hot_deal.listing',['id'=>$service->id]) }}" class="text-primary"><i class="mdi mdi-handshake-outline font-size-18 hot_deals" data_id="{{ $service->id }}"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vendor;
+use App\Models\{Vendor,Media};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -52,6 +52,13 @@ class VendorController extends Controller
             'status' => 'required'
         ];
 
+        if(!empty($request->vendor_profile))
+        {
+            $rules = [
+                'vendor_profile' => 'image|mimes:jpeg,png,pdf|max:2048',
+            ];
+        }
+
         $validate = Validator::make($request->all(),$rules);
 
         if($validate->fails())
@@ -59,13 +66,52 @@ class VendorController extends Controller
             return response()->json(['status' => false,'errors'=>$validate->messages()]);
         }
 
+        // dd($request->all());
+        $data = $request->all();
+
+        if(!empty($request->vendor_profile) && $request->hasFile('vendor_profile'))
+        {
+            $vendor_profile = $request->file('vendor_profile');
+            $file_name_incl_extn = $vendor_profile->getClientOriginalName();
+            $media = [
+                'file_name_incl_extn' => $file_name_incl_extn,
+                'file_name' => pathinfo($file_name_incl_extn,PATHINFO_FILENAME),
+                'file_path' => '/uploads',
+                'media_type' => $vendor_profile->getClientMimeType(),
+                'category' => 'Vendor Profile',
+            ];
+            
+            $vendor_profile->move(public_path('uploads'), $media['file_name_incl_extn']);
+
+            $media_details = Media::create($media);
+            $data['vendor_profile_id'] = $media_details->id;
+        }
+
+        if(!empty($request->salon_logo) && $request->hasFile('salon_logo'))
+        {
+            $salon_logo = $request->file('salon_logo');
+            $file_name_incl_extn = $salon_logo->getClientOriginalName();
+            $salon_logo_detail = [
+                'file_name_incl_extn' => $file_name_incl_extn,
+                'file_name' => pathinfo($file_name_incl_extn,PATHINFO_FILENAME),
+                'file_path' => '/uploads',
+                'media_type' => $salon_logo->getClientMimeType(),
+                'category' => 'Salon Logo',
+            ];
+            
+            $salon_logo->move(public_path('uploads'), $salon_logo_detail['file_name_incl_extn']);
+
+            $m_detail = Media::create($salon_logo_detail);
+            $data['salon_logo_id'] = $m_detail->id;
+        }
+        
         if(!empty($request->id))
         {
-            Vendor::find($request->id)->update($request->all());
+            Vendor::find($request->id)->update($data);
             return response()->json(['status'=>true,'redirect'=>route('vendor.listing'),'message'=>'Vendor Updated Successfully']);
         }
         {
-            Vendor::create($request->all());
+            Vendor::create($data);
             return response()->json(['status'=>true,'redirect'=>route('vendor.listing'),'message'=>'Vendor Created Successfully']);
         }
         
@@ -78,6 +124,7 @@ class VendorController extends Controller
     {
         $title = 'Edit Vendor - Flawless Beauty';
         $vendor = Vendor::find($id);
+        
         return view('admin.vendors.addEditVendor',compact('title','vendor'));
     }
 
